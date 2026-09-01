@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { fadeIn, fadeInUp, buttonClick } from '../../../animations/animation.js';
 import Dropdown from '../../../common/Dropdown.jsx';
 
+import heroBg from '../../../assets/images/hero.jpg';
 import handsIcon from '../../../assets/icons/hands.png';
 import arrowIcon from '../../../assets/icons/arrow.png';
 import checkIcon from '../../../assets/icons/check.png';
@@ -12,7 +13,7 @@ const Hero = () => {
   return (
     <section 
       className="relative w-full min-h-[850px] md:min-h-[920px] lg:min-h-[960px] bg-cover bg-center bg-no-repeat flex items-center pt-28 sm:pt-36 md:pt-40 lg:pt-32 pb-16 sm:pb-20 lg:pb-24"
-      style={{ backgroundImage: `url('/src/assets/images/hero.jpg')` }}
+      style={{ backgroundImage: `url(${heroBg})` }}
     >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/45"></div>
