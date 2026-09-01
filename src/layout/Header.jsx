@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { buttonClick } from '../animations/animation.js';
 import Dropdown from '../common/Dropdown.jsx';
+import logoImg from '../assets/images/logo.png';
 
 const MotionLink = motion(Link);
 
@@ -89,7 +90,7 @@ const Header = () => {
 
           {/* Logo (Centered) */}
           <MotionLink to="/" variants={buttonClick} whileHover="hover" whileTap="tap" className="flex-shrink-0 text-center flex-1 lg:flex-none flex justify-center">
-            <img src="/src/assets/images/logo.png" alt="Andha Luz VOYAGES" className="h-12 sm:h-14 object-contain" />
+            <img src={logoImg} alt="Andha Luz VOYAGES" className="h-12 sm:h-14 object-contain" />
           </MotionLink>
 
           {/* Dummy flex-1 for mobile centering */}
@@ -146,7 +147,7 @@ const Header = () => {
               className="relative w-[85%] max-w-sm bg-white h-full shadow-2xl flex flex-col overflow-y-auto font-sora text-black"
             >
               <div className="flex items-center justify-between p-5 border-b border-gray-100">
-                <img src="/src/assets/images/logo.png" alt="Logo" className="h-10 filter invert" />
+                <img src={logoImg} alt="Logo" className="h-10 filter invert" />
                 <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
                   <X size={20} />
                 </button>
