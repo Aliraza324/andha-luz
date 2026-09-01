@@ -6,7 +6,7 @@ const Home = lazy(() => import('../pages/landing/home/Home'));
 
 const LandingRoutes = () => {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#1b3447] text-white">Loading...</div>}>
+    <Suspense >
       <Routes>
         <Route path="/" element={<Home />} />
         {/* Add more landing routes here in the future */}
