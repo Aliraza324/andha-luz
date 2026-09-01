@@ -214,13 +214,6 @@ const OurPromise = () => {
                   </p>
                 </div>
               </motion.div>
-
-              {/* Small Connector Chevron between cards (hidden on last card) */}
-              {index < steps.length - 1 && (
-                <div className="flex absolute -right-3 z-20 text-[#CC5B3B]/80 items-center justify-center pointer-events-none">
-                  <ChevronRight size={16} strokeWidth={2.5} />
-                </div>
-              )}
             </div>
           ))}
         </motion.div>

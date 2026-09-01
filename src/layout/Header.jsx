@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Star, Phone, ChevronDown, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,11 +9,37 @@ const MotionLink = motion(Link);
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="absolute top-0 left-0 w-full z-50">
-      {/* Top Bar - Hidden on small screens */}
-      <div className="hidden lg:block text-white py-2 px-2 sm:px-4 lg:px-6 border-b border-white/10">
+    <header 
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-[#071914]/95 backdrop-blur-lg shadow-xl' 
+          : 'bg-gradient-to-b from-black/60 via-black/20 to-transparent'
+      }`}
+    >
+      {/* Top Bar - Hidden on small screens & Hidden on scroll down */}
+      <div 
+        className={`hidden lg:block text-white transition-all duration-300 overflow-hidden ${
+          isScrolled 
+            ? 'max-h-0 opacity-0 py-0 border-transparent pointer-events-none' 
+            : 'max-h-16 opacity-100 py-2 px-2 sm:px-4 lg:px-6 border-b border-white/10'
+        }`}
+      >
         <div className="w-full max-w-[1600px] mx-auto flex justify-between items-center text-sm">
           {/* Left: Login */}
           <motion.button 
@@ -41,7 +67,7 @@ const Header = () => {
             </div>
             <motion.button 
               variants={buttonClick} whileHover="hover" whileTap="tap"
-              className="bg-[#dc6941] hover:bg-[#c95d38] text-white px-5 py-2 rounded-full font-bold transition-colors uppercase text-xs tracking-wider"
+              className="bg-[#dc6941] hover:bg-[#c95d38] text-white px-5 py-2 rounded-full font-bold transition-colors uppercase text-xs tracking-wider cursor-pointer shadow-sm"
             >
               DEMANDER UN DEVIS
             </motion.button>
@@ -50,13 +76,19 @@ const Header = () => {
       </div>
 
       {/* Main Navigation */}
-      <div className="bg-[#1b3447]/40 backdrop-blur-md border-b border-white/10 py-4 px-4 lg:px-8 shadow-sm">
+      <div 
+        className={`transition-all duration-300 px-4 lg:px-8 ${
+          isScrolled 
+            ? 'py-3 sm:py-3.5 border-b border-white/10' 
+            : 'bg-[#1b3447]/35 backdrop-blur-md border-b border-white/10 py-4 px-4 lg:px-8 shadow-sm'
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           
           {/* Mobile Menu Toggle (Left on mobile, hidden on lg) */}
           <div className="lg:hidden flex-1">
-            <button onClick={() => setIsMobileMenuOpen(true)} className="text-white hover:text-gray-300">
-              <Menu size={28} />
+            <button onClick={() => setIsMobileMenuOpen(true)} className="text-white hover:text-gray-300 p-1">
+              <Menu size={26} />
             </button>
           </div>
 
@@ -89,7 +121,13 @@ const Header = () => {
 
           {/* Logo (Centered) */}
           <MotionLink to="/" variants={buttonClick} whileHover="hover" whileTap="tap" className="flex-shrink-0 text-center flex-1 lg:flex-none flex justify-center">
-            <img src="/src/assets/images/logo.png" alt="Andha Luz VOYAGES" className="h-12 sm:h-14 object-contain" />
+            <img 
+              src="/src/assets/images/logo.png" 
+              alt="Andha Luz VOYAGES" 
+              className={`object-contain transition-all duration-300 ${
+                isScrolled ? 'h-10 sm:h-11' : 'h-12 sm:h-14'
+              }`} 
+            />
           </MotionLink>
 
           {/* Dummy flex-1 for mobile centering */}

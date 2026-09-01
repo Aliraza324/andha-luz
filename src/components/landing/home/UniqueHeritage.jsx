@@ -106,7 +106,7 @@ const UniqueHeritage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="sm:absolute sm:-bottom-8 sm:left-4 bg-white rounded-[24px] sm:rounded-[28px] p-6 sm:p-7 shadow-2xl border border-gray-100 max-w-sm mt-4 sm:mt-0"
+              className="sm:absolute sm:-bottom-8 sm:left-4 bg-white rounded-[24px] sm:rounded-[28px] p-6 sm:p-7 border border-[#EDE7DC] max-w-sm mt-4 sm:mt-0"
             >
               <div className="flex items-center gap-2.5 mb-2.5">
                 {/* Exact Terracotta 4-Petal Clover Vector Icon */}
