@@ -11,13 +11,13 @@ import lockIcon from '../../../assets/icons/lock.png';
 const Hero = () => {
   return (
     <section 
-      className="relative w-full min-h-[900px] bg-cover bg-center bg-no-repeat flex items-center py-24 sm:py-0"
+      className="relative w-full min-h-[850px] md:min-h-[920px] lg:min-h-[960px] bg-cover bg-center bg-no-repeat flex items-center pt-28 sm:pt-36 md:pt-40 lg:pt-32 pb-16 sm:pb-20 lg:pb-24"
       style={{ backgroundImage: `url('/src/assets/images/hero.jpg')` }}
     >
       {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="absolute inset-0 bg-black/45"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mt-16 sm:mt-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
         
         {/* Left Content */}
         <motion.div 
@@ -26,15 +26,15 @@ const Hero = () => {
           animate="visible"
           className="text-white flex flex-col justify-center"
         >
-          <p className="font-sora text-xs sm:text-sm font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4">
+          <p className="font-sora text-xs sm:text-sm font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4 text-[#E5A83B]">
             Discover the real
           </p>
-          <h1 className="text-[42px] leading-[1.1] sm:text-6xl lg:text-[80px] text-[#dc6941] mb-4 sm:mb-6" style={{ fontFamily: "'MuseoModerno', sans-serif", fontWeight: 500 }}>
+          <h1 className="text-[38px] sm:text-5xl md:text-6xl lg:text-[76px] leading-[1.1] text-[#dc6941] mb-4 sm:mb-6" style={{ fontFamily: "'MuseoModerno', sans-serif", fontWeight: 500 }}>
             Authentic<br />
             Andalusia
           </h1>
           
-          <h2 className="font-sora text-lg sm:text-xl md:text-2xl font-semibold mb-4 sm:mb-6 max-w-lg">
+          <h2 className="font-sora text-base sm:text-lg md:text-xl font-semibold mb-3 sm:mb-5 max-w-lg leading-snug">
             Tailor-made trips to the heart of the real Spain
           </h2>
 
@@ -43,7 +43,7 @@ const Hero = () => {
             <div className="w-16 sm:w-24 h-[1px] bg-white/50"></div>
           </div>
 
-          <p className="font-sora text-gray-100 max-w-md text-sm sm:text-base leading-relaxed mb-8">
+          <p className="font-sora text-gray-100 max-w-md text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-8">
             From Seville to Granada, from Córdoba to Ronda, experience unique cultural and human adventures, designed around your desires.
           </p>
 
@@ -51,7 +51,7 @@ const Hero = () => {
             variants={buttonClick}
             whileHover="hover"
             whileTap="tap"
-            className="bg-white hover:bg-gray-100 text-[#1b3447] font-sora font-semibold px-5 sm:px-6 py-3 rounded-full flex items-center justify-center gap-3 transition-colors w-full sm:w-fit"
+            className="bg-white hover:bg-gray-100 text-[#1b3447] font-sora font-semibold px-5 sm:px-6 py-3 rounded-full flex items-center justify-center gap-3 transition-colors w-full sm:w-fit shadow-lg"
           >
             <div className="bg-[#1b3447] text-white rounded-full p-1.5 flex items-center justify-center">
               <Play size={14} fill="currentColor" />

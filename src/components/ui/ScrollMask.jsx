@@ -14,10 +14,10 @@ const ScrollMask = ({ children, title = "Andalusia", subtitle = "Scroll to explo
     restDelta: 0.0005
   });
 
-  // Map smooth progress (0 to 1) to clipPath percentage (0% to 150%)
+  // Map smooth progress (0 to 1) to clipPath percentage (0% to 150%) from the exact viewport center (50vw 50vh)
   const clipPath = useTransform(smoothProgress, [0, 1], [
-    "circle(0% at 50% 50%)",
-    "circle(150% at 50% 50%)"
+    "circle(0% at 50vw 50vh)",
+    "circle(150% at 50vw 50vh)"
   ]);
 
   // Smooth text fade out and subtle scale down
