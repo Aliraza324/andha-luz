@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Lazy load the Home component
+
 const Home = lazy(() => import('../pages/landing/home/Home'));
 
 const LandingRoutes = () => {
