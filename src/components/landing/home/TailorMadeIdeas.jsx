@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, ArrowRight, ChevronLeft, ChevronRight, Users } from 'lucide-react';
 import { 
   fadeInUp, 
@@ -22,6 +22,8 @@ import cardImg4 from '../../../assets/images/our (4).png';
 
 const TailorMadeIdeas = () => {
   const [activeFilter, setActiveFilter] = useState('Family');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   const filters = [
     { label: 'Family', hasIcon: true },
@@ -65,6 +67,33 @@ const TailorMadeIdeas = () => {
       price: "From €1,290 / person"
     }
   ];
+
+  const handleNext = () => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % travelCards.length);
+  };
+
+  const handlePrev = () => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + travelCards.length) % travelCards.length);
+  };
+
+  const slideVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 60 : -60,
+      opacity: 0
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.3, ease: 'easeOut' }
+    },
+    exit: (dir) => ({
+      x: dir < 0 ? 60 : -60,
+      opacity: 0,
+      transition: { duration: 0.2, ease: 'easeIn' }
+    })
+  };
 
   const bottomFeatures = [
     {
@@ -146,26 +175,112 @@ const TailorMadeIdeas = () => {
           <div className="flex items-center gap-2">
             <button 
               aria-label="Previous"
-              className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
+              onClick={handlePrev}
+              className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-transform cursor-pointer"
             >
               <ChevronLeft size={18} />
             </button>
             <button 
               aria-label="Next"
-              className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
+              onClick={handleNext}
+              className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-transform cursor-pointer"
             >
               <ChevronRight size={18} />
             </button>
           </div>
         </div>
 
-        {/* Cards Grid */}
+        {/* Mobile View Slider (< sm) */}
+        <div className="block sm:hidden mb-12">
+          <div className="relative overflow-hidden">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = Math.abs(offset.x) * velocity.x;
+                  if (swipe < -100 || offset.x < -50) {
+                    handleNext();
+                  } else if (swipe > 100 || offset.x > 50) {
+                    handlePrev();
+                  }
+                }}
+                className="bg-white rounded-[24px] overflow-hidden shadow-sm flex flex-col border border-[#F0EBE1] cursor-grab active:cursor-grabbing select-none"
+              >
+                {/* Image Container with Badge */}
+                <div className="relative h-[220px] w-full overflow-hidden">
+                  <img 
+                    src={travelCards[currentIndex].image} 
+                    alt={travelCards[currentIndex].title} 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
+                    {travelCards[currentIndex].tag}
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="p-5 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-[#182A3A] font-bold text-base leading-snug mb-3">
+                      {travelCards[currentIndex].title}
+                    </h3>
+
+                    <div className="flex items-center gap-1.5 text-xs text-[#6B7A88] mb-1.5">
+                      <Calendar size={14} className="text-[#182A3A]" />
+                      <span>{travelCards[currentIndex].duration}</span>
+                    </div>
+
+                    <p className="text-xs font-semibold text-[#182A3A] mb-5">
+                      {travelCards[currentIndex].price}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-[#CC5B3B] font-bold text-xs flex items-center gap-1.5">
+                      Discover the trip
+                    </span>
+                    <ArrowRight size={14} className="text-[#CC5B3B]" />
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            {travelCards.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setDirection(idx > currentIndex ? 1 : -1);
+                  setCurrentIndex(idx);
+                }}
+                aria-label={`Go to travel idea ${idx + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  idx === currentIndex 
+                    ? 'w-6 bg-[#B85D3D]' 
+                    : 'w-2 bg-gray-300 hover:bg-gray-400'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop / Tablet Cards Grid (>= sm) */}
         <motion.div 
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-12 sm:mb-16"
+          className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-12 sm:mb-16"
         >
           {travelCards.map((card) => (
             <motion.div
@@ -173,7 +288,7 @@ const TailorMadeIdeas = () => {
               variants={fadeInUp}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.25 }}
-              className="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col border border-[#F0EBE1] group"
+              className="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col border border-[#F0EBE1] group cursor-pointer"
             >
               {/* Image Container with Badge */}
               <div className="relative h-[210px] w-full overflow-hidden">
