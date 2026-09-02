@@ -425,27 +425,29 @@ const TestimonialsGuarantees = () => {
           </div>
 
           {/* DESKTOP & TABLET CAROUSEL (>= sm) */}
-          <div className="hidden sm:block relative py-2">
+          <div className="hidden sm:block relative py-4 px-1">
             {/* Carousel Left Navigation Arrow */}
             <button 
               aria-label="Previous review"
               onClick={handlePrev}
-              className="absolute -left-3 sm:-left-4 lg:-left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
+              className="absolute -left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
             >
               <ChevronLeft size={20} />
             </button>
 
             {/* Sliding Track Container */}
-            <div className="overflow-hidden">
+            <div className="overflow-hidden py-2 px-1 -my-2 -mx-1">
               <motion.div 
-                className="flex gap-4 sm:gap-5"
-                animate={{ x: `-${desktopIndex * 25}%` }}
+                className="flex gap-5"
+                animate={{ 
+                  x: `calc(-${desktopIndex} * ((100% - 60px) / 4 + 20px))` 
+                }}
                 transition={{ type: "spring", stiffness: 260, damping: 28 }}
               >
                 {reviews.map((rev, index) => (
                   <div
                     key={index}
-                    className="w-[calc(50%-10px)] lg:w-[calc(25%-15px)] flex-shrink-0"
+                    className="w-[calc((100%-20px)/2)] lg:w-[calc((100%-60px)/4)] flex-shrink-0"
                   >
                     <div className="bg-white rounded-[24px] p-6 sm:p-7 shadow-sm border border-[#EDE7DC] flex flex-col justify-between h-full hover:shadow-md hover:-translate-y-1 transition-all duration-200">
                       <div>
@@ -503,7 +505,7 @@ const TestimonialsGuarantees = () => {
             <button 
               aria-label="Next review"
               onClick={handleNext}
-              className="absolute -right-3 sm:-right-4 lg:-right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
+              className="absolute -right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white shadow-md border border-gray-200 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
             >
               <ChevronRight size={20} />
             </button>

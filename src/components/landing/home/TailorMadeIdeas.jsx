@@ -47,7 +47,7 @@ const TailorMadeIdeas = () => {
       title: "In the heart of Réunion's Cirques with your tribe",
       duration: "10 days / 7 nights",
       price: "From €1,950 / person",
-      category: "Family"
+      categories: ["Family", "Road trip"]
     },
     {
       id: 2,
@@ -56,7 +56,7 @@ const TailorMadeIdeas = () => {
       title: "The White Villages of Ronda and Andalusia Heritage",
       duration: "7 days / 6 nights",
       price: "From €1,850 / person",
-      category: "Stay"
+      categories: ["Stay", "Family", "Road trip"]
     },
     {
       id: 3,
@@ -65,7 +65,7 @@ const TailorMadeIdeas = () => {
       title: "Eco-friendly discovery of Kenya with my tribe",
       duration: "10 days / 7 nights",
       price: "From €4,720 / person",
-      category: "Family"
+      categories: ["Family", "Luxury travel"]
     },
     {
       id: 4,
@@ -74,7 +74,7 @@ const TailorMadeIdeas = () => {
       title: "Andalusia, between culture and the sweetness of life",
       duration: "8 days / 7 nights",
       price: "From €1,290 / person",
-      category: "Stay"
+      categories: ["Stay", "Family"]
     },
     {
       id: 5,
@@ -83,7 +83,7 @@ const TailorMadeIdeas = () => {
       title: "Sahara Golden Dunes & Luxury Desert Glamping",
       duration: "6 days / 5 nights",
       price: "From €2,390 / person",
-      category: "Luxury travel"
+      categories: ["Luxury travel", "Stay", "Road trip"]
     },
     {
       id: 6,
@@ -92,7 +92,7 @@ const TailorMadeIdeas = () => {
       title: "Costa del Sol Luxury Seaside & Sun-drenched Escapes",
       duration: "8 days / 7 nights",
       price: "From €1,640 / person",
-      category: "Road trip"
+      categories: ["Road trip", "Stay", "Luxury travel"]
     },
     {
       id: 7,
@@ -101,7 +101,7 @@ const TailorMadeIdeas = () => {
       title: "Secret Patios & Historic Wonders of Córdoba",
       duration: "5 days / 4 nights",
       price: "From €1,150 / person",
-      category: "Stay"
+      categories: ["Stay", "Family", "Luxury travel"]
     },
     {
       id: 8,
@@ -110,21 +110,33 @@ const TailorMadeIdeas = () => {
       title: "Lapland Wilderness & Aurora Borealis Expedition",
       duration: "7 days / 6 nights",
       price: "From €2,850 / person",
-      category: "Northern lights"
+      categories: ["Northern lights", "Luxury travel", "Family"]
     }
   ];
 
-  const maxDesktopIndex = Math.max(0, travelCards.length - 4);
+  // Dynamically filter cards based on activeFilter
+  const filteredCards = travelCards.filter((card) =>
+    card.categories.includes(activeFilter)
+  );
+
+  const displayCards = filteredCards.length > 0 ? filteredCards : travelCards;
+  const maxDesktopIndex = Math.max(0, displayCards.length - 4);
+
+  const handleFilterSelect = (filterLabel) => {
+    setActiveFilter(filterLabel);
+    setCurrentIndex(0);
+    setDesktopIndex(0);
+  };
 
   const handleNext = () => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % travelCards.length);
+    setCurrentIndex((prev) => (prev + 1) % displayCards.length);
     setDesktopIndex((prev) => (prev >= maxDesktopIndex ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + travelCards.length) % travelCards.length);
+    setCurrentIndex((prev) => (prev - 1 + displayCards.length) % displayCards.length);
     setDesktopIndex((prev) => (prev <= 0 ? maxDesktopIndex : prev - 1));
   };
 
@@ -207,7 +219,7 @@ const TailorMadeIdeas = () => {
               return (
                 <button
                   key={filter.label}
-                  onClick={() => setActiveFilter(filter.label)}
+                  onClick={() => handleFilterSelect(filter.label)}
                   className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-[13px] font-semibold transition-all flex items-center gap-2 cursor-pointer ${
                     isActive
                       ? 'bg-[#B85D3D] text-white shadow-sm'
@@ -245,7 +257,7 @@ const TailorMadeIdeas = () => {
           <div className="relative overflow-hidden">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
-                key={currentIndex}
+                key={`${activeFilter}-${currentIndex}`}
                 custom={direction}
                 variants={slideVariants}
                 initial="enter"
@@ -270,12 +282,12 @@ const TailorMadeIdeas = () => {
                     {/* Front: Destination Photo */}
                     <div className="absolute inset-0 w-full h-full [backface-visibility:hidden]">
                       <img 
-                        src={travelCards[currentIndex].image} 
-                        alt={travelCards[currentIndex].title} 
+                        src={displayCards[currentIndex]?.image} 
+                        alt={displayCards[currentIndex]?.title} 
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
-                        {travelCards[currentIndex].tag}
+                        {displayCards[currentIndex]?.tag}
                       </div>
                     </div>
 
@@ -300,16 +312,16 @@ const TailorMadeIdeas = () => {
                 <div className="p-5 flex flex-col justify-between">
                   <div>
                     <h3 className="text-[#182A3A] font-bold text-base leading-snug mb-3">
-                      {travelCards[currentIndex].title}
+                      {displayCards[currentIndex]?.title}
                     </h3>
 
                     <div className="flex items-center gap-1.5 text-xs text-[#6B7A88] mb-1.5">
                       <Calendar size={14} className="text-[#182A3A]" />
-                      <span>{travelCards[currentIndex].duration}</span>
+                      <span>{displayCards[currentIndex]?.duration}</span>
                     </div>
 
                     <p className="text-xs font-semibold text-[#182A3A] mb-5">
-                      {travelCards[currentIndex].price}
+                      {displayCards[currentIndex]?.price}
                     </p>
                   </div>
 
@@ -326,7 +338,7 @@ const TailorMadeIdeas = () => {
 
           {/* Dots Indicator */}
           <div className="flex items-center justify-center gap-2 mt-4">
-            {travelCards.map((_, idx) => (
+            {displayCards.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => {
@@ -345,82 +357,90 @@ const TailorMadeIdeas = () => {
         </div>
 
         {/* Desktop / Large Screen Slider (>= sm) */}
-        <div className="hidden sm:block overflow-hidden mb-12 sm:mb-16 -mx-2 px-2 py-2">
-          <motion.div 
-            className="flex gap-5 sm:gap-6"
-            animate={{ x: `-${desktopIndex * 25}%` }}
-            transition={{ type: "spring", stiffness: 260, damping: 28 }}
-          >
-            {travelCards.map((card) => (
-              <div
-                key={card.id}
-                className="w-[calc(50%-12px)] lg:w-[calc(25%-18px)] flex-shrink-0"
-              >
-                <div className="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col border border-[#F0EBE1] group h-full">
-                  
-                  {/* 3D Flip Card Image Container */}
-                  <div className="relative h-[215px] w-full [perspective:1000px] overflow-hidden group/flip">
-                    <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover/flip:[transform:rotateY(180deg)]">
-                      
-                      {/* Front: Destination Photo */}
-                      <div className="absolute inset-0 w-full h-full [backface-visibility:hidden]">
-                        <img 
-                          src={card.image} 
-                          alt={card.title} 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
-                          {card.tag}
+        <div className="hidden sm:block overflow-hidden mb-12 sm:mb-16 -mx-2 px-2 py-4">
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={activeFilter}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className="flex gap-5 sm:gap-6 transition-transform duration-500 ease-out"
+              style={{ 
+                transform: `translateX(calc(-${desktopIndex} * ((100% - 72px) / 4 + 24px)))` 
+              }}
+            >
+              {displayCards.map((card) => (
+                <div
+                  key={card.id}
+                  className="w-[calc((100%-20px)/2)] lg:w-[calc((100%-72px)/4)] flex-shrink-0"
+                >
+                  <div className="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col border border-[#F0EBE1] group h-full">
+                    
+                    {/* 3D Flip Card Image Container */}
+                    <div className="relative h-[215px] w-full [perspective:1000px] overflow-hidden group/flip">
+                      <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover/flip:[transform:rotateY(180deg)]">
+                        
+                        {/* Front: Destination Photo */}
+                        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden]">
+                          <img 
+                            src={card.image} 
+                            alt={card.title} 
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
+                            {card.tag}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Back: Itinerary Map (our (2).png) */}
-                      <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#FAF4EE]">
-                        <img 
-                          src={mapCardImg} 
-                          alt="Itinerary Map" 
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute top-3.5 right-3.5 bg-[#B85D3D] text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-sm">
-                          ITINERARY MAP
+                        {/* Back: Itinerary Map (our (2).png) */}
+                        <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#FAF4EE]">
+                          <img 
+                            src={mapCardImg} 
+                            alt="Itinerary Map" 
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute top-3.5 right-3.5 bg-[#B85D3D] text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-sm">
+                            ITINERARY MAP
+                          </div>
+                          <div className="absolute bottom-2.5 left-3 right-3 bg-black/60 backdrop-blur-xs text-white text-[11px] py-1 px-2.5 rounded-lg text-center font-medium">
+                            Route & Accommodations
+                          </div>
                         </div>
-                        <div className="absolute bottom-2.5 left-3 right-3 bg-black/60 backdrop-blur-xs text-white text-[11px] py-1 px-2.5 rounded-lg text-center font-medium">
-                          Route & Accommodations
-                        </div>
-                      </div>
 
+                      </div>
                     </div>
+
+                    {/* Card Body */}
+                    <div className="p-5 flex flex-col flex-grow justify-between">
+                      <div>
+                        <h3 className="text-[#182A3A] font-bold text-[15px] leading-snug mb-3 line-clamp-2 min-h-[42px]">
+                          {card.title}
+                        </h3>
+
+                        <div className="flex items-center gap-1.5 text-xs text-[#6B7A88] mb-1">
+                          <Calendar size={13} className="text-[#182A3A]" />
+                          <span>{card.duration}</span>
+                        </div>
+
+                        <p className="text-xs font-semibold text-[#182A3A] mb-5">
+                          {card.price}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+                        <span className="text-[#CC5B3B] font-bold text-xs group-hover:underline flex items-center gap-1.5">
+                          Discover the trip
+                        </span>
+                        <ArrowRight size={14} className="text-[#CC5B3B] transition-transform group-hover:translate-x-1" />
+                      </div>
+                    </div>
+
                   </div>
-
-                  {/* Card Body */}
-                  <div className="p-5 flex flex-col flex-grow justify-between">
-                    <div>
-                      <h3 className="text-[#182A3A] font-bold text-[15px] leading-snug mb-3 line-clamp-2 min-h-[42px]">
-                        {card.title}
-                      </h3>
-
-                      <div className="flex items-center gap-1.5 text-xs text-[#6B7A88] mb-1">
-                        <Calendar size={13} className="text-[#182A3A]" />
-                        <span>{card.duration}</span>
-                      </div>
-
-                      <p className="text-xs font-semibold text-[#182A3A] mb-5">
-                        {card.price}
-                      </p>
-                    </div>
-
-                    <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
-                      <span className="text-[#CC5B3B] font-bold text-xs group-hover:underline flex items-center gap-1.5">
-                        Discover the trip
-                      </span>
-                      <ArrowRight size={14} className="text-[#CC5B3B] transition-transform group-hover:translate-x-1" />
-                    </div>
-                  </div>
-
                 </div>
-              </div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Bottom "Have a project in mind?" Banner (No background box) */}
