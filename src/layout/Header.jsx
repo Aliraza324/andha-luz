@@ -11,6 +11,36 @@ const MotionLink = motion(Link);
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState(null);
+
+  const toggleMobileDropdown = (name) => {
+    setOpenMobileDropdown((prev) => (prev === name ? null : name));
+  };
+
+  const destinationsList = [
+    { label: 'Seville', path: '/' },
+    { label: 'Granada', path: '/' },
+    { label: 'Córdoba', path: '/' },
+    { label: 'Ronda', path: '/' },
+  ];
+
+  const desiresList = [
+    { label: 'Culture & History', path: '/' },
+    { label: 'Nature & Beach', path: '/' },
+    { label: 'Gastronomy', path: '/' },
+  ];
+
+  const staysList = [
+    { label: 'Luxury Hotels', path: '/' },
+    { label: 'Beach Villas', path: '/' },
+    { label: 'Authentic Riads', path: '/' },
+  ];
+
+  const agencyList = [
+    { label: 'About Us', path: '/' },
+    { label: 'Contact', path: '/' },
+    { label: 'Reviews', path: '/' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,11 +55,16 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    setOpenMobileDropdown(null);
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-[#071914]/95 backdrop-blur-lg shadow-xl' 
+          ? 'bg-white/95 backdrop-blur-lg shadow-md border-b border-gray-100' 
           : 'bg-gradient-to-b from-black/60 via-black/20 to-transparent'
       }`}
     >
@@ -80,7 +115,7 @@ const Header = () => {
       <div 
         className={`transition-all duration-300 px-4 lg:px-8 ${
           isScrolled 
-            ? 'py-3 sm:py-3.5 border-b border-white/10' 
+            ? 'py-3 sm:py-3.5' 
             : 'bg-[#1b3447]/35 backdrop-blur-md border-b border-white/10 py-4 px-4 lg:px-8 shadow-sm'
         }`}
       >
@@ -88,17 +123,20 @@ const Header = () => {
           
           {/* Mobile Menu Toggle (Left on mobile, hidden on lg) */}
           <div className="lg:hidden flex-1">
-            <button onClick={() => setIsMobileMenuOpen(true)} className="text-white hover:text-gray-300 p-1">
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)} 
+              className={`p-1 transition-colors ${isScrolled ? 'text-gray-900 hover:text-gray-600' : 'text-white hover:text-gray-300'}`}
+            >
               <Menu size={26} />
             </button>
           </div>
 
           {/* Left Links (Desktop) */}
-          <nav className="hidden lg:flex flex-1 items-center gap-8 text-white font-sora text-sm font-semibold tracking-wide">
+          <nav className={`hidden lg:flex flex-1 items-center gap-8 font-sora text-sm font-semibold tracking-wide transition-colors duration-300 ${
+            isScrolled ? 'text-gray-800' : 'text-white'
+          }`}>
             <Dropdown 
-              items={[
-                { label: 'Seville' }, { label: 'Granada' }, { label: 'Córdoba' }, { label: 'Ronda' }
-              ]}
+              items={destinationsList}
               trigger={
                 <motion.div variants={buttonClick} whileHover="hover" whileTap="tap" className="flex items-center gap-1 hover:text-[#dc6941] transition-colors cursor-pointer">
                   DESTINATIONS <ChevronDown size={14} />
@@ -106,9 +144,7 @@ const Header = () => {
               }
             />
             <Dropdown 
-              items={[
-                { label: 'Culture & History' }, { label: 'Nature & Beach' }, { label: 'Gastronomy' }
-              ]}
+              items={desiresList}
               trigger={
                 <motion.div variants={buttonClick} whileHover="hover" whileTap="tap" className="flex items-center gap-1 hover:text-[#dc6941] transition-colors cursor-pointer">
                   YOUR DESIRES <ChevronDown size={14} />
@@ -126,7 +162,7 @@ const Header = () => {
               src={logoImg} 
               alt="Andha Luz VOYAGES" 
               className={`object-contain transition-all duration-300 ${
-                isScrolled ? 'h-10 sm:h-11' : 'h-12 sm:h-14'
+                isScrolled ? 'h-10 sm:h-11 filter invert' : 'h-12 sm:h-14'
               }`} 
             />
           </MotionLink>
@@ -135,14 +171,14 @@ const Header = () => {
           <div className="lg:hidden flex-1"></div>
 
           {/* Right Links (Desktop) */}
-          <nav className="hidden lg:flex flex-1 justify-end items-center gap-8 text-white font-sora text-sm font-semibold tracking-wide">
+          <nav className={`hidden lg:flex flex-1 justify-end items-center gap-8 font-sora text-sm font-semibold tracking-wide transition-colors duration-300 ${
+            isScrolled ? 'text-gray-800' : 'text-white'
+          }`}>
             <MotionLink to="/" variants={buttonClick} whileHover="hover" whileTap="tap" className="hover:text-[#dc6941] transition-colors">
               GUIDED TOURS
             </MotionLink>
             <Dropdown 
-              items={[
-                { label: 'Luxury Hotels' }, { label: 'Beach Villas' }, { label: 'Authentic Riads' }
-              ]}
+              items={staysList}
               trigger={
                 <motion.div variants={buttonClick} whileHover="hover" whileTap="tap" className="flex items-center gap-1 hover:text-[#dc6941] transition-colors cursor-pointer">
                   STAYS <ChevronDown size={14} />
@@ -150,9 +186,7 @@ const Header = () => {
               }
             />
             <Dropdown 
-              items={[
-                { label: 'About Us' }, { label: 'Contact' }, { label: 'Reviews' }
-              ]}
+              items={agencyList}
               trigger={
                 <motion.div variants={buttonClick} whileHover="hover" whileTap="tap" className="flex items-center gap-1 hover:text-[#dc6941] transition-colors cursor-pointer">
                   OUR AGENCY <ChevronDown size={14} />
@@ -172,7 +206,7 @@ const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMobileMenu}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
 
@@ -186,30 +220,169 @@ const Header = () => {
             >
               <div className="flex items-center justify-between p-5 border-b border-gray-100">
                 <img src={logoImg} alt="Logo" className="h-10 filter invert" />
-                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
+                <button onClick={closeMobileMenu} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors">
                   <X size={20} />
                 </button>
               </div>
 
-              <div className="p-5 flex flex-col gap-4 font-semibold text-sm">
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between py-2 border-b border-gray-50">
-                  DESTINATIONS <ChevronDown size={16} className="text-gray-400" />
-                </Link>
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between py-2 border-b border-gray-50">
-                  YOUR DESIRES <ChevronDown size={16} className="text-gray-400" />
-                </Link>
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-gray-50">
+              <div className="p-5 flex flex-col gap-1 font-semibold text-sm">
+                {/* Destinations Accordion */}
+                <div className="border-b border-gray-100 py-1">
+                  <button 
+                    onClick={() => toggleMobileDropdown('destinations')} 
+                    className="w-full flex items-center justify-between py-2 text-left hover:text-[#dc6941] transition-colors"
+                  >
+                    <span>DESTINATIONS</span>
+                    <ChevronDown 
+                      size={16} 
+                      className={`text-gray-400 transition-transform duration-200 ${openMobileDropdown === 'destinations' ? 'rotate-180 text-[#dc6941]' : ''}`} 
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {openMobileDropdown === 'destinations' && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden bg-gray-50/70 rounded-lg my-1"
+                      >
+                        <div className="py-1 px-3 flex flex-col">
+                          {destinationsList.map((item, idx) => (
+                            <Link 
+                              key={idx} 
+                              to={item.path} 
+                              onClick={closeMobileMenu}
+                              className="py-2 text-gray-600 hover:text-[#dc6941] text-xs font-medium border-b border-gray-100 last:border-none transition-colors"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Your Desires Accordion */}
+                <div className="border-b border-gray-100 py-1">
+                  <button 
+                    onClick={() => toggleMobileDropdown('desires')} 
+                    className="w-full flex items-center justify-between py-2 text-left hover:text-[#dc6941] transition-colors"
+                  >
+                    <span>YOUR DESIRES</span>
+                    <ChevronDown 
+                      size={16} 
+                      className={`text-gray-400 transition-transform duration-200 ${openMobileDropdown === 'desires' ? 'rotate-180 text-[#dc6941]' : ''}`} 
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {openMobileDropdown === 'desires' && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden bg-gray-50/70 rounded-lg my-1"
+                      >
+                        <div className="py-1 px-3 flex flex-col">
+                          {desiresList.map((item, idx) => (
+                            <Link 
+                              key={idx} 
+                              to={item.path} 
+                              onClick={closeMobileMenu}
+                              className="py-2 text-gray-600 hover:text-[#dc6941] text-xs font-medium border-b border-gray-100 last:border-none transition-colors"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Direct Link 1 */}
+                <Link to="/" onClick={closeMobileMenu} className="py-3 border-b border-gray-100 hover:text-[#dc6941] transition-colors">
                   SELF-DRIVE TOURS
                 </Link>
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="py-2 border-b border-gray-50">
+
+                {/* Direct Link 2 */}
+                <Link to="/" onClick={closeMobileMenu} className="py-3 border-b border-gray-100 hover:text-[#dc6941] transition-colors">
                   GUIDED TOURS
                 </Link>
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between py-2 border-b border-gray-50">
-                  STAYS <ChevronDown size={16} className="text-gray-400" />
-                </Link>
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between py-2 border-b border-gray-50">
-                  OUR AGENCY <ChevronDown size={16} className="text-gray-400" />
-                </Link>
+
+                {/* Stays Accordion */}
+                <div className="border-b border-gray-100 py-1">
+                  <button 
+                    onClick={() => toggleMobileDropdown('stays')} 
+                    className="w-full flex items-center justify-between py-2 text-left hover:text-[#dc6941] transition-colors"
+                  >
+                    <span>STAYS</span>
+                    <ChevronDown 
+                      size={16} 
+                      className={`text-gray-400 transition-transform duration-200 ${openMobileDropdown === 'stays' ? 'rotate-180 text-[#dc6941]' : ''}`} 
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {openMobileDropdown === 'stays' && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden bg-gray-50/70 rounded-lg my-1"
+                      >
+                        <div className="py-1 px-3 flex flex-col">
+                          {staysList.map((item, idx) => (
+                            <Link 
+                              key={idx} 
+                              to={item.path} 
+                              onClick={closeMobileMenu}
+                              className="py-2 text-gray-600 hover:text-[#dc6941] text-xs font-medium border-b border-gray-100 last:border-none transition-colors"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Our Agency Accordion */}
+                <div className="border-b border-gray-100 py-1">
+                  <button 
+                    onClick={() => toggleMobileDropdown('agency')} 
+                    className="w-full flex items-center justify-between py-2 text-left hover:text-[#dc6941] transition-colors"
+                  >
+                    <span>OUR AGENCY</span>
+                    <ChevronDown 
+                      size={16} 
+                      className={`text-gray-400 transition-transform duration-200 ${openMobileDropdown === 'agency' ? 'rotate-180 text-[#dc6941]' : ''}`} 
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {openMobileDropdown === 'agency' && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden bg-gray-50/70 rounded-lg my-1"
+                      >
+                        <div className="py-1 px-3 flex flex-col">
+                          {agencyList.map((item, idx) => (
+                            <Link 
+                              key={idx} 
+                              to={item.path} 
+                              onClick={closeMobileMenu}
+                              className="py-2 text-gray-600 hover:text-[#dc6941] text-xs font-medium border-b border-gray-100 last:border-none transition-colors"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
 
               <div className="mt-auto p-5 bg-gray-50 flex flex-col gap-4">

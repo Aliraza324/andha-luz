@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -18,6 +18,9 @@ import { fadeInUp, staggerContainer } from '../../../animations/animation.js';
 import Counter from '../../../common/Counter.jsx';
 
 const TestimonialsGuarantees = () => {
+  const [mobileIndex, setMobileIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+
   const reviews = [
     {
       stars: 5,
@@ -52,6 +55,33 @@ const TestimonialsGuarantees = () => {
       date: "March 2024"
     }
   ];
+
+  const handleNext = () => {
+    setDirection(1);
+    setMobileIndex((prev) => (prev + 1) % reviews.length);
+  };
+
+  const handlePrev = () => {
+    setDirection(-1);
+    setMobileIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  };
+
+  const slideVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 60 : -60,
+      opacity: 0
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.3, ease: 'easeOut' }
+    },
+    exit: (dir) => ({
+      x: dir < 0 ? 60 : -60,
+      opacity: 0,
+      transition: { duration: 0.2, ease: 'easeIn' }
+    })
+  };
 
   const stats = [
     {
@@ -164,18 +194,18 @@ const TestimonialsGuarantees = () => {
           </motion.p>
         </div>
 
-        {/* Google Reviews Summary Card (Exact Match) */}
+        {/* Google Reviews Summary Card (Fully Responsive) */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex justify-center mb-10 sm:mb-12"
+          className="flex justify-center mb-10 sm:mb-12 w-full px-2 sm:px-0"
         >
-          <div className="bg-white rounded-2xl sm:rounded-[22px] px-5 sm:px-8 py-3.5 sm:py-4 shadow-sm border border-[#EDE7DC] flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 w-full max-w-2xl">
+          <div className="bg-white rounded-2xl sm:rounded-[22px] p-4 sm:px-8 sm:py-4 shadow-sm border border-[#EDE7DC] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3.5 md:gap-6 w-full max-w-2xl">
             
             {/* Left Part: Icon + Google Reviews + 4.9 Stars */}
-            <div className="flex items-center gap-3 sm:gap-3.5 w-full md:w-auto justify-center md:justify-start">
-              {/* Circle X Icon in Soft Cream Round Container */}
+            <div className="flex items-center gap-3 sm:gap-3.5 w-full md:w-auto">
+              {/* Circle Icon in Soft Cream Round Container */}
               <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#F5EFEB] flex items-center justify-center p-2 flex-shrink-0 text-[#C55938]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C55938" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="9" />
@@ -185,36 +215,39 @@ const TestimonialsGuarantees = () => {
               </div>
 
               {/* Title & Ratings */}
-              <div className="flex items-center gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 flex-1 min-w-0">
                 <span className="text-[#182A3A] font-bold text-sm sm:text-base whitespace-nowrap">
                   Google Reviews
                 </span>
 
                 <div className="flex flex-col">
-                  <div className="flex items-center gap-1.5 sm:gap-2">
-                    <span className="text-[#182A3A] font-bold text-lg sm:text-2xl leading-none">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                    <span className="text-[#182A3A] font-bold text-base sm:text-2xl leading-none">
                       4.9
                     </span>
                     <div className="flex items-center text-[#FBBC04] gap-0.5 flex-nowrap">
                       {[...Array(5)].map((_, i) => (
-                        <svg key={i} width="15" height="15" viewBox="0 0 24 24" fill="#FBBC04" stroke="#FBBC04" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
+                        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#FBBC04" stroke="#FBBC04" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
                           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                         </svg>
                       ))}
                     </div>
                   </div>
-                  <span className="text-[#8C98A4] text-[10.5px] sm:text-xs leading-tight mt-1 font-normal whitespace-nowrap">
+                  <span className="text-[#8C98A4] text-[10.5px] sm:text-xs leading-tight mt-0.5 font-normal">
                     Based on 326 reviews
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Vertical Divider Line */}
-            <div className="hidden md:block w-[1px] h-8 bg-gray-200" />
+            {/* Mobile Horizontal Divider */}
+            <div className="w-full h-px bg-gray-100 md:hidden my-0.5" />
+
+            {/* Desktop Vertical Divider Line */}
+            <div className="hidden md:block w-[1px] h-8 bg-gray-200 flex-shrink-0" />
 
             {/* Right Part: User Icon + 98% of our travelers */}
-            <div className="flex items-center gap-3 sm:gap-3.5 w-full md:w-auto justify-center md:justify-start">
+            <div className="flex items-center gap-3 sm:gap-3.5 w-full md:w-auto">
               {/* Users Icon in Soft Cream Round Container */}
               <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#F5EFEB] flex items-center justify-center p-2 flex-shrink-0 text-[#C55938]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C55938" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -226,7 +259,7 @@ const TestimonialsGuarantees = () => {
               </div>
 
               {/* Text */}
-              <div className="flex flex-col text-left">
+              <div className="flex flex-col text-left flex-1 min-w-0">
                 <span className="text-[#182A3A] text-xs sm:text-[13px] leading-tight">
                   <strong className="font-bold text-[#182A3A]">98%</strong> <span className="text-[#6B7A88]">of our travelers</span>
                 </span>
@@ -239,88 +272,206 @@ const TestimonialsGuarantees = () => {
           </div>
         </motion.div>
 
-        {/* 4 Testimonial Review Cards Carousel */}
+        {/* 4 Testimonial Review Cards (Mobile Slider + Desktop Grid) */}
         <div className="relative mb-12 sm:mb-16">
-          {/* Carousel Left Navigation Arrow */}
-          <button 
-            aria-label="Previous"
-            className="hidden sm:flex absolute -left-4 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
-          >
-            <ChevronLeft size={20} />
-          </button>
+          
+          {/* MOBILE ONLY SLIDER (< sm) */}
+          <div className="block sm:hidden">
+            <div className="relative overflow-hidden min-h-[290px]">
+              <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.div
+                  key={mobileIndex}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(e, { offset, velocity }) => {
+                    const swipe = Math.abs(offset.x) * velocity.x;
+                    if (swipe < -100 || offset.x < -50) {
+                      handleNext();
+                    } else if (swipe > 100 || offset.x > 50) {
+                      handlePrev();
+                    }
+                  }}
+                  className="bg-white rounded-[24px] p-6 shadow-sm border border-[#EDE7DC] flex flex-col justify-between cursor-grab active:cursor-grabbing select-none"
+                >
+                  <div>
+                    {/* Top Rating Row */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex gap-1 text-[#E5A83B]">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={15} fill="#E5A83B" stroke="none" />
+                        ))}
+                      </div>
+                      {/* Badge on top right */}
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center ${
+                        reviews[mobileIndex].type === 'google' ? 'text-[#CC5B3B]' : 'text-[#9CA3AF]'
+                      }`}>
+                        {reviews[mobileIndex].type === 'google' ? (
+                          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="m15 9-6 6" />
+                            <path d="m9 9 6 6" />
+                          </svg>
+                        ) : (
+                          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="7" r="4" />
+                            <path d="M4 21v-2a6 6 0 0 1 12 0v2" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
 
-          {/* Review Cards Grid */}
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
-          >
-            {reviews.map((rev, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.25 }}
-                className="bg-white rounded-[24px] p-6 sm:p-7 shadow-sm border border-[#EDE7DC] flex flex-col justify-between"
-              >
-                <div>
-                  {/* Top Rating Row */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex gap-1 text-[#E5A83B]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={14} fill="#E5A83B" stroke="none" />
-                      ))}
-                    </div>
-                    {/* Badge on top right (Google icon terracotta, User person icon gray) */}
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                      rev.type === 'google' ? 'text-[#CC5B3B]' : 'text-[#9CA3AF]'
-                    }`}>
-                      {rev.type === 'google' ? (
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <circle cx="12" cy="12" r="9" />
-                          <path d="m15 9-6 6" />
-                          <path d="m9 9 6 6" />
-                        </svg>
-                      ) : (
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <circle cx="12" cy="7" r="4" />
-                          <path d="M4 21v-2a6 6 0 0 1 12 0v2" />
-                        </svg>
-                      )}
-                    </div>
+                    {/* Review Quote */}
+                    <p className="text-[#182A3A] text-xs leading-relaxed font-normal mb-5 min-h-[85px]">
+                      {reviews[mobileIndex].quote}
+                    </p>
                   </div>
 
-                  {/* Review Quote */}
-                  <p className="text-[#182A3A] text-xs sm:text-[13px] leading-relaxed font-normal mb-6 min-h-[90px]">
-                    {rev.quote}
-                  </p>
-                </div>
+                  {/* Author Info */}
+                  <div className="pt-4 border-t border-gray-100 flex flex-col">
+                    <span className="text-[#182A3A] font-bold text-xs sm:text-[13px]">
+                      {reviews[mobileIndex].name}
+                    </span>
+                    <span className="text-[#8C98A4] text-[10px] mt-0.5">
+                      {reviews[mobileIndex].trip}
+                    </span>
+                    <span className="text-[#A0AAB5] text-[10px] mt-0.5">
+                      {reviews[mobileIndex].date}
+                    </span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-                {/* Author Info */}
-                <div className="pt-4 border-t border-gray-100 flex flex-col">
-                  <span className="text-[#182A3A] font-bold text-xs sm:text-[13px]">
-                    {rev.name}
-                  </span>
-                  <span className="text-[#8C98A4] text-[10px] sm:text-[11px] mt-0.5">
-                    {rev.trip}
-                  </span>
-                  <span className="text-[#A0AAB5] text-[10px] mt-0.5">
-                    {rev.date}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+            {/* Mobile Controls: Prev/Next Arrow Buttons + Indicator Dots */}
+            <div className="flex items-center justify-between mt-4 px-2">
+              <button 
+                onClick={handlePrev}
+                aria-label="Previous review"
+                className="w-9 h-9 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-transform cursor-pointer"
+              >
+                <ChevronLeft size={18} />
+              </button>
 
-          {/* Carousel Right Navigation Arrow */}
-          <button 
-            aria-label="Next"
-            className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
-          >
-            <ChevronRight size={20} />
-          </button>
+              {/* Dots Indicator */}
+              <div className="flex items-center gap-2">
+                {reviews.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setDirection(idx > mobileIndex ? 1 : -1);
+                      setMobileIndex(idx);
+                    }}
+                    aria-label={`Go to review ${idx + 1}`}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      idx === mobileIndex 
+                        ? 'w-6 bg-[#CC5B3B]' 
+                        : 'w-2 bg-gray-300 hover:bg-gray-400'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button 
+                onClick={handleNext}
+                aria-label="Next review"
+                className="w-9 h-9 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-transform cursor-pointer"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+
+          {/* DESKTOP & TABLET GRID (>= sm) */}
+          <div className="hidden sm:block">
+            {/* Carousel Left Navigation Arrow */}
+            <button 
+              aria-label="Previous"
+              onClick={handlePrev}
+              className="hidden sm:flex absolute -left-4 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            {/* Review Cards Grid */}
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
+            >
+              {reviews.map((rev, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.25 }}
+                  className="bg-white rounded-[24px] p-6 sm:p-7 shadow-sm border border-[#EDE7DC] flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Top Rating Row */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex gap-1 text-[#E5A83B]">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={14} fill="#E5A83B" stroke="none" />
+                        ))}
+                      </div>
+                      {/* Badge on top right (Google icon terracotta, User person icon gray) */}
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                        rev.type === 'google' ? 'text-[#CC5B3B]' : 'text-[#9CA3AF]'
+                      }`}>
+                        {rev.type === 'google' ? (
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="m15 9-6 6" />
+                            <path d="m9 9 6 6" />
+                          </svg>
+                        ) : (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="7" r="4" />
+                            <path d="M4 21v-2a6 6 0 0 1 12 0v2" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Review Quote */}
+                    <p className="text-[#182A3A] text-xs sm:text-[13px] leading-relaxed font-normal mb-6 min-h-[90px]">
+                      {rev.quote}
+                    </p>
+                  </div>
+
+                  {/* Author Info */}
+                  <div className="pt-4 border-t border-gray-100 flex flex-col">
+                    <span className="text-[#182A3A] font-bold text-xs sm:text-[13px]">
+                      {rev.name}
+                    </span>
+                    <span className="text-[#8C98A4] text-[10px] sm:text-[11px] mt-0.5">
+                      {rev.trip}
+                    </span>
+                    <span className="text-[#A0AAB5] text-[10px] mt-0.5">
+                      {rev.date}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Carousel Right Navigation Arrow */}
+            <button 
+              aria-label="Next"
+              onClick={handleNext}
+              className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
         </div>
 
         {/* Verified Stats Bar (Floating White Card with animated Counter) */}
