@@ -6,12 +6,12 @@ const ScrollMask = ({ children, title = "Andalusia", subtitle = "Scroll to explo
   const rawProgress = useMotionValue(0);
   const touchStartY = useRef(0);
 
-  // Apply a silky smooth spring physics to the scroll progress
+  // Apply a silky, natural spring physics to the scroll progress
   const smoothProgress = useSpring(rawProgress, {
-    stiffness: 40,
-    damping: 18,
-    mass: 0.6,
-    restDelta: 0.0005
+    stiffness: 70,
+    damping: 16,
+    mass: 0.45,
+    restDelta: 0.0008
   });
 
   // Map smooth progress (0 to 1) to clipPath percentage (0% to 150%) from the exact viewport center (50vw 50vh)
@@ -21,54 +21,52 @@ const ScrollMask = ({ children, title = "Andalusia", subtitle = "Scroll to explo
   ]);
 
   // Smooth text fade out and subtle scale down
-  const textOpacity = useTransform(smoothProgress, [0, 0.45], [1, 0]);
-  const textScale = useTransform(smoothProgress, [0, 0.5], [1, 0.92]);
+  const textOpacity = useTransform(smoothProgress, [0, 0.4], [1, 0]);
+  const textScale = useTransform(smoothProgress, [0, 0.45], [1, 0.94]);
 
   // Function to finish the animation smoothly
   const completeAnimation = () => {
+    document.body.style.overflow = 'auto';
     animate(rawProgress, 1, {
-      duration: 1.2,
+      duration: 0.65,
       ease: [0.16, 1, 0.3, 1],
       onComplete: () => {
-        // Give a tiny buffer for spring to settle
-        setTimeout(() => {
-          setIsDone(true);
-          document.body.style.overflow = 'auto';
-        }, 300);
+        setIsDone(true);
       }
     });
   };
 
   useEffect(() => {
-    if (isDone) return;
+    if (isDone) {
+      document.body.style.overflow = 'auto';
+      return;
+    }
 
-    // Lock body scrolling during the mask intro stage
+    // Lock body scrolling during the initial mask screen
     document.body.style.overflow = 'hidden';
 
-    // Wheel event handler (mouse wheel / trackpad scroll)
+    // Wheel event handler: smooth proportional opening with comfortable pace
     const handleWheel = (e) => {
       if (isDone) return;
 
       if (e.deltaY > 0) {
-        // User scrolling down - smooth gradual increment
         const current = rawProgress.get();
-        const delta = Math.min(Math.max(e.deltaY * 0.0007, 0.015), 0.08);
+        const delta = Math.min(Math.max(e.deltaY * 0.002, 0.06), 0.18);
         const next = Math.min(1, current + delta);
-        
+
         rawProgress.set(next);
 
-        if (next >= 0.85) {
+        if (next >= 0.65) {
           completeAnimation();
         }
       } else if (e.deltaY < 0) {
-        // User scrolling up while in intro: gentle decrease
         const current = rawProgress.get();
-        const next = Math.max(0, current + e.deltaY * 0.0007);
+        const next = Math.max(0, current + e.deltaY * 0.002);
         rawProgress.set(next);
       }
     };
 
-    // Touch event handlers for mobile devices
+    // Touch event handlers for mobile devices: 1 natural swipe opens smoothly
     const handleTouchStart = (e) => {
       touchStartY.current = e.touches[0].clientY;
     };
@@ -80,11 +78,11 @@ const ScrollMask = ({ children, title = "Andalusia", subtitle = "Scroll to explo
 
       if (deltaY > 5) {
         const current = rawProgress.get();
-        const next = Math.min(1, current + deltaY * 0.0012);
+        const next = Math.min(1, current + deltaY * 0.0035);
         rawProgress.set(next);
         touchStartY.current = currentY;
 
-        if (next >= 0.85) {
+        if (next >= 0.65) {
           completeAnimation();
         }
       }
@@ -107,13 +105,13 @@ const ScrollMask = ({ children, title = "Andalusia", subtitle = "Scroll to explo
       {/* Intro Black Screen Overlay */}
       {!isDone && (
         <div className="fixed inset-0 z-0 flex flex-col items-center justify-center bg-black select-none pointer-events-auto">
-          <motion.div 
-            style={{ opacity: textOpacity, scale: textScale }} 
+          <motion.div
+            style={{ opacity: textOpacity, scale: textScale }}
             className="text-center px-4 flex flex-col items-center cursor-pointer transition-transform"
             onClick={completeAnimation}
           >
-            <h1 
-              className="text-5xl sm:text-7xl md:text-8xl font-bold text-white mb-4 tracking-tight" 
+            <h1
+              className="text-5xl sm:text-7xl md:text-8xl font-bold text-white mb-4 tracking-tight"
               style={{ fontFamily: "'MuseoModerno', sans-serif" }}
             >
               {title}

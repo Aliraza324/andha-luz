@@ -18,15 +18,15 @@ import { fadeIn } from '../../../animations/animation.js';
 
 const Home = () => {
   return (
-    <motion.div 
+    <motion.div
       variants={fadeIn}
       initial="hidden"
       animate="visible"
       className="relative w-full min-h-screen"
     >
-      <ScrollMask 
-        title="Andalusia" 
-        subtitle="Scroll to explore" 
+      <ScrollMask
+        title="Andalusia"
+        subtitle="Scroll to explore"
       >
         {/* The entire website content that will be revealed */}
         <div className="relative w-full h-full">
