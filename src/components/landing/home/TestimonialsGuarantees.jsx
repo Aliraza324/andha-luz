@@ -19,6 +19,7 @@ import Counter from '../../../common/Counter.jsx';
 
 const TestimonialsGuarantees = () => {
   const [mobileIndex, setMobileIndex] = useState(0);
+  const [desktopIndex, setDesktopIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
   const reviews = [
@@ -53,17 +54,53 @@ const TestimonialsGuarantees = () => {
       name: "Michael T.",
       trip: "Family Adventure in Andalusia",
       date: "March 2024"
+    },
+    {
+      stars: 5,
+      type: "google",
+      quote: `"The luxury stays and private tours arranged for us in Ronda and Seville were world-class. Thank you for the magical memories!"`,
+      name: "Camille D.",
+      trip: "Luxury Andalusia Escape",
+      date: "July 2024"
+    },
+    {
+      stars: 5,
+      type: "user",
+      quote: `"Incredible attention to detail. Every restaurant recommendation and cultural tour was spot-on. We will definitely book again."`,
+      name: "David K.",
+      trip: "Gastronomy & Culture Tour",
+      date: "June 2024"
+    },
+    {
+      stars: 5,
+      type: "google",
+      quote: `"Our self-drive road trip through the white villages was pure bliss. 24/7 support gave us complete peace of mind."`,
+      name: "Laura & Marc",
+      trip: "Pueblos Blancos Road Trip",
+      date: "August 2024"
+    },
+    {
+      stars: 5,
+      type: "user",
+      quote: `"Authentic flamenco, private Alhambra access, and charming boutique hotels. The best holiday experience we've ever had."`,
+      name: "Oliver W.",
+      trip: "Heritage & Stays Tour",
+      date: "May 2024"
     }
   ];
+
+  const maxDesktopIndex = Math.max(0, reviews.length - 4);
 
   const handleNext = () => {
     setDirection(1);
     setMobileIndex((prev) => (prev + 1) % reviews.length);
+    setDesktopIndex((prev) => (prev >= maxDesktopIndex ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
     setDirection(-1);
     setMobileIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    setDesktopIndex((prev) => (prev <= 0 ? maxDesktopIndex : prev - 1));
   };
 
   const slideVariants = {
@@ -387,87 +424,86 @@ const TestimonialsGuarantees = () => {
             </div>
           </div>
 
-          {/* DESKTOP & TABLET GRID (>= sm) */}
-          <div className="hidden sm:block">
+          {/* DESKTOP & TABLET CAROUSEL (>= sm) */}
+          <div className="hidden sm:block relative py-2">
             {/* Carousel Left Navigation Arrow */}
             <button 
-              aria-label="Previous"
+              aria-label="Previous review"
               onClick={handlePrev}
-              className="hidden sm:flex absolute -left-4 sm:-left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
+              className="absolute -left-3 sm:-left-4 lg:-left-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
             >
               <ChevronLeft size={20} />
             </button>
 
-            {/* Review Cards Grid */}
-            <motion.div 
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-40px" }}
-              className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
-            >
-              {reviews.map((rev, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.25 }}
-                  className="bg-white rounded-[24px] p-6 sm:p-7 shadow-sm border border-[#EDE7DC] flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Top Rating Row */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex gap-1 text-[#E5A83B]">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} size={14} fill="#E5A83B" stroke="none" />
-                        ))}
+            {/* Sliding Track Container */}
+            <div className="overflow-hidden">
+              <motion.div 
+                className="flex gap-4 sm:gap-5"
+                animate={{ x: `-${desktopIndex * 25}%` }}
+                transition={{ type: "spring", stiffness: 260, damping: 28 }}
+              >
+                {reviews.map((rev, index) => (
+                  <div
+                    key={index}
+                    className="w-[calc(50%-10px)] lg:w-[calc(25%-15px)] flex-shrink-0"
+                  >
+                    <div className="bg-white rounded-[24px] p-6 sm:p-7 shadow-sm border border-[#EDE7DC] flex flex-col justify-between h-full hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+                      <div>
+                        {/* Top Rating Row */}
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex gap-1 text-[#E5A83B]">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} size={14} fill="#E5A83B" stroke="none" />
+                            ))}
+                          </div>
+                          {/* Badge on top right */}
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                            rev.type === 'google' ? 'text-[#CC5B3B]' : 'text-[#9CA3AF]'
+                          }`}>
+                            {rev.type === 'google' ? (
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="12" cy="12" r="9" />
+                                <path d="m15 9-6 6" />
+                                <path d="m9 9 6 6" />
+                              </svg>
+                            ) : (
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="12" cy="7" r="4" />
+                                <path d="M4 21v-2a6 6 0 0 1 12 0v2" />
+                              </svg>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Review Quote */}
+                        <p className="text-[#182A3A] text-xs sm:text-[13px] leading-relaxed font-normal mb-6 min-h-[90px]">
+                          {rev.quote}
+                        </p>
                       </div>
-                      {/* Badge on top right (Google icon terracotta, User person icon gray) */}
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                        rev.type === 'google' ? 'text-[#CC5B3B]' : 'text-[#9CA3AF]'
-                      }`}>
-                        {rev.type === 'google' ? (
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="9" />
-                            <path d="m15 9-6 6" />
-                            <path d="m9 9 6 6" />
-                          </svg>
-                        ) : (
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="7" r="4" />
-                            <path d="M4 21v-2a6 6 0 0 1 12 0v2" />
-                          </svg>
-                        )}
+
+                      {/* Author Info */}
+                      <div className="pt-4 border-t border-gray-100 flex flex-col">
+                        <span className="text-[#182A3A] font-bold text-xs sm:text-[13px]">
+                          {rev.name}
+                        </span>
+                        <span className="text-[#8C98A4] text-[10px] sm:text-[11px] mt-0.5">
+                          {rev.trip}
+                        </span>
+                        <span className="text-[#A0AAB5] text-[10px] mt-0.5">
+                          {rev.date}
+                        </span>
                       </div>
                     </div>
-
-                    {/* Review Quote */}
-                    <p className="text-[#182A3A] text-xs sm:text-[13px] leading-relaxed font-normal mb-6 min-h-[90px]">
-                      {rev.quote}
-                    </p>
                   </div>
-
-                  {/* Author Info */}
-                  <div className="pt-4 border-t border-gray-100 flex flex-col">
-                    <span className="text-[#182A3A] font-bold text-xs sm:text-[13px]">
-                      {rev.name}
-                    </span>
-                    <span className="text-[#8C98A4] text-[10px] sm:text-[11px] mt-0.5">
-                      {rev.trip}
-                    </span>
-                    <span className="text-[#A0AAB5] text-[10px] mt-0.5">
-                      {rev.date}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+                ))}
+              </motion.div>
+            </div>
 
             {/* Carousel Right Navigation Arrow */}
             <button 
-              aria-label="Next"
+              aria-label="Next review"
               onClick={handleNext}
-              className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 transition-colors cursor-pointer"
+              className="absolute -right-3 sm:-right-4 lg:-right-5 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full bg-white shadow-lg border border-gray-100 flex items-center justify-center text-[#182A3A] hover:bg-gray-50 active:scale-95 transition-all cursor-pointer"
             >
               <ChevronRight size={20} />
             </button>

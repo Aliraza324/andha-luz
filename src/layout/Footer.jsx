@@ -252,13 +252,10 @@ const Footer = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     type="submit"
+                    aria-label="Subscribe"
                     className="bg-[#C48A48] hover:bg-[#b07839] px-4 flex items-center justify-center text-white transition-colors cursor-pointer flex-shrink-0"
                   >
-                    <div className="w-5 h-5 rounded-full border-[1.5px] border-white flex items-center justify-center">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round">
-                        <path d="M18 6 6 18M6 6l12 12" />
-                      </svg>
-                    </div>
+                    <Send size={16} className="text-white transform rotate-45 -translate-y-0.5" />
                   </motion.button>
                 </form>
               </div>

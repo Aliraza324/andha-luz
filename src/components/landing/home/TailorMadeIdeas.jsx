@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, ArrowRight, ChevronLeft, ChevronRight, Users } from 'lucide-react';
+import { Calendar, ArrowRight, ChevronLeft, ChevronRight, Users, MapPin } from 'lucide-react';
 import { 
   fadeInUp, 
   staggerContainer, 
@@ -19,10 +19,16 @@ import cardImg1 from '../../../assets/images/our (1).png';
 import cardImg2 from '../../../assets/images/our (2).png';
 import cardImg3 from '../../../assets/images/our (3).png';
 import cardImg4 from '../../../assets/images/our (4).png';
+import tourSahara from '../../../assets/images/tour-sahara.jpg';
+import tourRonda from '../../../assets/images/tour-ronda.jpg';
+import tourCosta from '../../../assets/images/tour-costa.jpg';
+import tourCordoba from '../../../assets/images/tour-cordoba.jpg';
+import mapCardImg from '../../../assets/images/our (2).png';
 
 const TailorMadeIdeas = () => {
   const [activeFilter, setActiveFilter] = useState('Family');
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [desktopIndex, setDesktopIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
   const filters = [
@@ -40,15 +46,17 @@ const TailorMadeIdeas = () => {
       tag: "SELF-DRIVE TOUR",
       title: "In the heart of Réunion's Cirques with your tribe",
       duration: "10 days / 7 nights",
-      price: "From €1,950 / person"
+      price: "From €1,950 / person",
+      category: "Family"
     },
     {
       id: 2,
-      image: cardImg2,
+      image: tourRonda,
       tag: "PRIVATE TOUR",
-      title: "Eco-friendly discovery of Kenya with my tribe",
-      duration: "10 days / 7 nights",
-      price: "From €4,720 / person"
+      title: "The White Villages of Ronda and Andalusia Heritage",
+      duration: "7 days / 6 nights",
+      price: "From €1,850 / person",
+      category: "Stay"
     },
     {
       id: 3,
@@ -56,7 +64,8 @@ const TailorMadeIdeas = () => {
       tag: "PRIVATE TOUR",
       title: "Eco-friendly discovery of Kenya with my tribe",
       duration: "10 days / 7 nights",
-      price: "From €4,720 / person"
+      price: "From €4,720 / person",
+      category: "Family"
     },
     {
       id: 4,
@@ -64,18 +73,59 @@ const TailorMadeIdeas = () => {
       tag: "STAY",
       title: "Andalusia, between culture and the sweetness of life",
       duration: "8 days / 7 nights",
-      price: "From €1,290 / person"
+      price: "From €1,290 / person",
+      category: "Stay"
+    },
+    {
+      id: 5,
+      image: tourSahara,
+      tag: "LUXURY TRAVEL",
+      title: "Sahara Golden Dunes & Luxury Desert Glamping",
+      duration: "6 days / 5 nights",
+      price: "From €2,390 / person",
+      category: "Luxury travel"
+    },
+    {
+      id: 6,
+      image: tourCosta,
+      tag: "ROAD TRIP",
+      title: "Costa del Sol Luxury Seaside & Sun-drenched Escapes",
+      duration: "8 days / 7 nights",
+      price: "From €1,640 / person",
+      category: "Road trip"
+    },
+    {
+      id: 7,
+      image: tourCordoba,
+      tag: "CULTURE TOUR",
+      title: "Secret Patios & Historic Wonders of Córdoba",
+      duration: "5 days / 4 nights",
+      price: "From €1,150 / person",
+      category: "Stay"
+    },
+    {
+      id: 8,
+      image: cardImg3,
+      tag: "NORTHERN LIGHTS",
+      title: "Lapland Wilderness & Aurora Borealis Expedition",
+      duration: "7 days / 6 nights",
+      price: "From €2,850 / person",
+      category: "Northern lights"
     }
   ];
+
+  const maxDesktopIndex = Math.max(0, travelCards.length - 4);
 
   const handleNext = () => {
     setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % travelCards.length);
+    setDesktopIndex((prev) => (prev >= maxDesktopIndex ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
     setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + travelCards.length) % travelCards.length);
+    setDesktopIndex((prev) => (prev <= 0 ? maxDesktopIndex : prev - 1));
   };
 
   const slideVariants = {
@@ -212,17 +262,37 @@ const TailorMadeIdeas = () => {
                     handlePrev();
                   }
                 }}
-                className="bg-white rounded-[24px] overflow-hidden shadow-sm flex flex-col border border-[#F0EBE1] cursor-grab active:cursor-grabbing select-none"
+                className="bg-white rounded-[24px] overflow-hidden shadow-sm flex flex-col border border-[#F0EBE1] cursor-grab active:cursor-grabbing select-none group"
               >
-                {/* Image Container with Badge */}
-                <div className="relative h-[220px] w-full overflow-hidden">
-                  <img 
-                    src={travelCards[currentIndex].image} 
-                    alt={travelCards[currentIndex].title} 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
-                    {travelCards[currentIndex].tag}
+                {/* 3D Flip Image Container on Mobile (Tap/Hover to Flip) */}
+                <div className="relative h-[220px] w-full [perspective:1000px] overflow-hidden group/flip">
+                  <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover/flip:[transform:rotateY(180deg)]">
+                    {/* Front: Destination Photo */}
+                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden]">
+                      <img 
+                        src={travelCards[currentIndex].image} 
+                        alt={travelCards[currentIndex].title} 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
+                        {travelCards[currentIndex].tag}
+                      </div>
+                    </div>
+
+                    {/* Back: Itinerary Map */}
+                    <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#FAF4EE]">
+                      <img 
+                        src={mapCardImg} 
+                        alt="Itinerary Map" 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-3.5 right-3.5 bg-[#B85D3D] text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-sm">
+                        ITINERARY MAP
+                      </div>
+                      <div className="absolute bottom-2.5 left-3 right-3 bg-black/60 backdrop-blur-xs text-white text-[11px] py-1 px-2.5 rounded-lg text-center font-medium">
+                        Route & Accommodations
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -274,61 +344,84 @@ const TailorMadeIdeas = () => {
           </div>
         </div>
 
-        {/* Desktop / Tablet Cards Grid (>= sm) */}
-        <motion.div 
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-40px" }}
-          className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-12 sm:mb-16"
-        >
-          {travelCards.map((card) => (
-            <motion.div
-              key={card.id}
-              variants={fadeInUp}
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.25 }}
-              className="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col border border-[#F0EBE1] group cursor-pointer"
-            >
-              {/* Image Container with Badge */}
-              <div className="relative h-[210px] w-full overflow-hidden">
-                <img 
-                  src={card.image} 
-                  alt={card.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
-                  {card.tag}
-                </div>
-              </div>
+        {/* Desktop / Large Screen Slider (>= sm) */}
+        <div className="hidden sm:block overflow-hidden mb-12 sm:mb-16 -mx-2 px-2 py-2">
+          <motion.div 
+            className="flex gap-5 sm:gap-6"
+            animate={{ x: `-${desktopIndex * 25}%` }}
+            transition={{ type: "spring", stiffness: 260, damping: 28 }}
+          >
+            {travelCards.map((card) => (
+              <div
+                key={card.id}
+                className="w-[calc(50%-12px)] lg:w-[calc(25%-18px)] flex-shrink-0"
+              >
+                <div className="bg-white rounded-[24px] overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col border border-[#F0EBE1] group h-full">
+                  
+                  {/* 3D Flip Card Image Container */}
+                  <div className="relative h-[215px] w-full [perspective:1000px] overflow-hidden group/flip">
+                    <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover/flip:[transform:rotateY(180deg)]">
+                      
+                      {/* Front: Destination Photo */}
+                      <div className="absolute inset-0 w-full h-full [backface-visibility:hidden]">
+                        <img 
+                          src={card.image} 
+                          alt={card.title} 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute top-3.5 right-3.5 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold tracking-wider text-[#182A3A] uppercase shadow-sm">
+                          {card.tag}
+                        </div>
+                      </div>
 
-              {/* Card Body */}
-              <div className="p-5 flex flex-col flex-grow justify-between">
-                <div>
-                  <h3 className="text-[#182A3A] font-bold text-[15px] leading-snug mb-3 line-clamp-2 min-h-[42px]">
-                    {card.title}
-                  </h3>
+                      {/* Back: Itinerary Map (our (2).png) */}
+                      <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#FAF4EE]">
+                        <img 
+                          src={mapCardImg} 
+                          alt="Itinerary Map" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-3.5 right-3.5 bg-[#B85D3D] text-white px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-sm">
+                          ITINERARY MAP
+                        </div>
+                        <div className="absolute bottom-2.5 left-3 right-3 bg-black/60 backdrop-blur-xs text-white text-[11px] py-1 px-2.5 rounded-lg text-center font-medium">
+                          Route & Accommodations
+                        </div>
+                      </div>
 
-                  <div className="flex items-center gap-1.5 text-xs text-[#6B7A88] mb-1">
-                    <Calendar size={13} className="text-[#182A3A]" />
-                    <span>{card.duration}</span>
+                    </div>
                   </div>
 
-                  <p className="text-xs text-[#6B7A88] mb-5">
-                    {card.price}
-                  </p>
-                </div>
+                  {/* Card Body */}
+                  <div className="p-5 flex flex-col flex-grow justify-between">
+                    <div>
+                      <h3 className="text-[#182A3A] font-bold text-[15px] leading-snug mb-3 line-clamp-2 min-h-[42px]">
+                        {card.title}
+                      </h3>
 
-                <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-[#CC5B3B] font-bold text-xs group-hover:underline flex items-center gap-1.5">
-                    Discover the trip
-                  </span>
-                  <ArrowRight size={14} className="text-[#CC5B3B] transition-transform group-hover:translate-x-1" />
+                      <div className="flex items-center gap-1.5 text-xs text-[#6B7A88] mb-1">
+                        <Calendar size={13} className="text-[#182A3A]" />
+                        <span>{card.duration}</span>
+                      </div>
+
+                      <p className="text-xs font-semibold text-[#182A3A] mb-5">
+                        {card.price}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-gray-100 flex items-center justify-between">
+                      <span className="text-[#CC5B3B] font-bold text-xs group-hover:underline flex items-center gap-1.5">
+                        Discover the trip
+                      </span>
+                      <ArrowRight size={14} className="text-[#CC5B3B] transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
+            ))}
+          </motion.div>
+        </div>
 
         {/* Bottom "Have a project in mind?" Banner (No background box) */}
         <motion.div 
