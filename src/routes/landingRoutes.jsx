@@ -11,6 +11,7 @@ const LandingRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* Add more landing routes here in the future */}
+        
       </Routes>
     </Suspense>
   );
