@@ -25,7 +25,7 @@ const Home = () => {
       className="relative w-full min-h-screen"
     >
       <ScrollMask
-        title="Andalusia"
+        title="The Haven Resort"
         subtitle="Scroll to explore"
       >
         {/* The entire website content that will be revealed */}

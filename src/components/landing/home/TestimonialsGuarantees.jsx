@@ -26,7 +26,7 @@ const TestimonialsGuarantees = () => {
     {
       stars: 5,
       type: "google",
-      quote: `"Andalusia took our breath away! Andha Luz Voyages planned every detail perfectly. From Seville to Granada, everything was unforgettable."`,
+      quote: `"Andalusia took our breath away! The Haven Resort planned every detail perfectly. From Seville to Granada, everything was unforgettable."`,
       name: "Sophia M.",
       trip: "Seville & Granada Tour",
       date: "May 2024"
@@ -42,7 +42,7 @@ const TestimonialsGuarantees = () => {
     {
       stars: 5,
       type: "google",
-      quote: `"Best travel agency in Spain! Professional, attentive and passionate about what they do. Highly recommend Andha Luz Voyages."`,
+      quote: `"Best travel agency in Spain! Professional, attentive and passionate about what they do. Highly recommend The Haven Resort."`,
       name: "Elena R.",
       trip: "Cordoba & Granada Tour",
       date: "June 2024"
@@ -50,7 +50,7 @@ const TestimonialsGuarantees = () => {
     {
       stars: 5,
       type: "user",
-      quote: `"From start to finish, our trip was seamless. Andha Luz Voyages exceeded all our expectations."`,
+      quote: `"From start to finish, our trip was seamless. The Haven Resort exceeded all our expectations."`,
       name: "Michael T.",
       trip: "Family Adventure in Andalusia",
       date: "March 2024"
@@ -227,7 +227,7 @@ const TestimonialsGuarantees = () => {
             transition={{ delay: 0.1 }}
             className="text-[#6B7A88] text-xs sm:text-sm max-w-xl leading-relaxed font-normal"
           >
-            Real experiences from travelers who explored Andalusia with Andha Luz Voyages. Their stories inspire our journeys.
+            Real experiences from travelers who explored Andalusia with The Haven Resort. Their stories inspire our journeys.
           </motion.p>
         </div>
 

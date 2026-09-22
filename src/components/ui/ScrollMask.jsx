@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, animate } from 'framer-motion';
 
-const ScrollMask = ({ children, title = "Andalusia", subtitle = "Scroll to explore" }) => {
+const ScrollMask = ({ children, title = "The Haven Resort", subtitle = "Scroll to explore" }) => {
   const [isDone, setIsDone] = useState(false);
   const rawProgress = useMotionValue(0);
   const touchStartY = useRef(0);

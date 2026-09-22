@@ -95,7 +95,7 @@ const Footer = () => {
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.3 }}
                   src={logoImg} 
-                  alt="Andha Luz Voyages" 
+                  alt="The Haven Resort" 
                   className="h-10 sm:h-11 w-auto object-contain mb-4 cursor-pointer" 
                 />
                 
@@ -372,7 +372,7 @@ const Footer = () => {
       >
         <div className="max-w-[1380px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3">
-            <span>© 2024 Andha Luz Voyages - All rights reserved</span>
+            <span>© 2024 The Haven Resort - All rights reserved</span>
             <span>|</span>
             <a href="#legal" className="hover:text-white transition-colors">Legal notice</a>
             <span>|</span>
@@ -383,9 +383,6 @@ const Footer = () => {
             <a href="#terms" className="hover:text-white transition-colors">Terms of sale</a>
           </div>
 
-          <div>
-            <span>Designed with ❤️ in Andalusia</span>
-          </div>
         </div>
       </motion.div>
 

@@ -89,7 +89,7 @@ const OfficialPartners = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-[#6B7A88] text-xs sm:text-[13px] max-w-2xl leading-relaxed font-normal"
           >
-            Pour vous garantir un voyage d'exception en toute sérénité, Andha Luz Voyages collabore étroitement avec les institutions du tourisme et les organismes de garantie les plus rigoureux.
+            Pour vous garantir un voyage d'exception en toute sérénité, The Haven Resort collabore étroitement avec les institutions du tourisme et les organismes de garantie les plus rigoureux.
           </motion.p>
         </div>
 
