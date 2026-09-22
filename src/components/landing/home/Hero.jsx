@@ -31,8 +31,8 @@ const Hero = () => {
             Discover the real
           </p>
           <h1 className="text-[38px] sm:text-5xl md:text-6xl lg:text-[76px] leading-[1.1] text-[#dc6941] mb-4 sm:mb-6" style={{ fontFamily: "'MuseoModerno', sans-serif", fontWeight: 500 }}>
-            Authentic<br />
-            Andalusia
+            The Haven<br />
+            Resort
           </h1>
           
           <h2 className="font-sora text-base sm:text-lg md:text-xl font-semibold mb-3 sm:mb-5 max-w-lg leading-snug">
@@ -57,7 +57,7 @@ const Hero = () => {
             <div className="bg-[#1b3447] text-white rounded-full p-1.5 flex items-center justify-center">
               <Play size={14} fill="currentColor" />
             </div>
-            Discover Andalusia
+            Discover The Haven
           </motion.button>
         </motion.div>
 

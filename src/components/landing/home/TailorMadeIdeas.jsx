@@ -53,7 +53,7 @@ const TailorMadeIdeas = () => {
       id: 2,
       image: tourRonda,
       tag: "PRIVATE TOUR",
-      title: "The White Villages of Ronda and Andalusia Heritage",
+      title: "The White Villages of Ronda and The Haven Heritage",
       duration: "7 days / 6 nights",
       price: "From €1,850 / person",
       categories: ["Stay", "Family", "Road trip"]
@@ -71,7 +71,7 @@ const TailorMadeIdeas = () => {
       id: 4,
       image: cardImg1,
       tag: "STAY",
-      title: "Andalusia, between culture and the sweetness of life",
+      title: "The Haven, between culture and the sweetness of life",
       duration: "8 days / 7 nights",
       price: "From €1,290 / person",
       categories: ["Stay", "Family"]

@@ -100,7 +100,7 @@ const Footer = () => {
                 />
                 
                 <p className="text-[#9EAEA8] text-xs sm:text-[12.5px] leading-[1.65] max-w-[270px] font-normal mb-5">
-                  Specialist in tailor-made trips to Andalusia and Spain. Authentic experiences, created with passion and local expertise.
+                  Specialist in tailor-made luxury experiences at The Haven Resort. Authentic escapes, created with passion and local expertise.
                 </p>
 
                 <div className="flex items-center gap-1.5 text-[#C48A48] text-xs italic mb-5">
@@ -108,7 +108,7 @@ const Footer = () => {
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                   </svg>
                   <span style={{ fontFamily: "'Playfair Display', serif" }}>
-                    Andalusia, our land, your story.
+                    The Haven, our sanctuary, your story.
                   </span>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const Footer = () => {
                   <span className="text-white text-[11.5px] sm:text-xs font-bold uppercase tracking-[0.14em]">DESTINATIONS</span>
                 </div>
                 <ul className="space-y-2 text-xs text-[#9EAEA8]">
-                  {['Andalusia', 'Granada', 'Seville', 'Córdoba', 'Málaga & la Costa del Sol', 'Cádiz & Costa de la Luz', 'Ronda & Serrania', 'Espagne'].map((dest, i) => (
+                  {['The Haven', 'Granada', 'Seville', 'Córdoba', 'Málaga & la Costa del Sol', 'Cádiz & Costa de la Luz', 'Ronda & Serrania', 'Espagne'].map((dest, i) => (
                     <li key={i}>
                       <a href={`#${dest}`} className="hover:text-white transition-all duration-200 hover:translate-x-1 inline-block leading-tight">
                         {dest}

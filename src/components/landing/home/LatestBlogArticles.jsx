@@ -14,7 +14,7 @@ const LatestBlogArticles = () => {
     {
       img: blog4, // Swapped with main card
       category: "CULTURE",
-      title: "The white villages of Andalusia: a timeless charm",
+      title: "The white villages of The Haven: a timeless charm",
       excerpt: "Flowered alleyways, breathtaking panoramas and preserved authenticity...",
       readTime: "5 min read",
       date: "May 12, 2024"
@@ -22,16 +22,16 @@ const LatestBlogArticles = () => {
     {
       img: blog2,
       category: "EXPERIENCES",
-      title: "The Andalusian horse: elegance and tradition",
-      excerpt: "Dive into the fascinating world of the Andalusian horse and Spanish equestrian art...",
+      title: "The Haven equestrian experience: elegance and tradition",
+      excerpt: "Dive into the fascinating world of equestrian art and heritage at The Haven...",
       readTime: "4 min read",
       date: "May 8, 2024"
     },
     {
       img: blog3,
       category: "NATURE",
-      title: "The most beautiful beaches of Andalusia",
-      excerpt: "From the secret coves of the Costa Tropical to the long golden beaches of Costa de la Luz...",
+      title: "The most beautiful scenic landscapes of The Haven",
+      excerpt: "From secret tranquil coves to breathtaking vistas and golden coastlines...",
       readTime: "6 min read",
       date: "May 3, 2024"
     }
@@ -91,7 +91,7 @@ const LatestBlogArticles = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-[#6B7A88] text-xs sm:text-[13.5px] max-w-xl font-normal leading-relaxed"
             >
-              Travel tips, discoveries and inspiration to prepare your next trip to Andalusia and Spain.
+              Travel tips, discoveries and inspiration to prepare your next experience with The Haven Resort.
             </motion.p>
           </div>
 
@@ -148,7 +148,7 @@ const LatestBlogArticles = () => {
                 className="text-2xl sm:text-3xl lg:text-[32px] font-bold leading-tight mb-3 group-hover:text-amber-100 transition-colors"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                Granada, an Andalusian gem between history and modernity
+                The Haven, a luxury gem between history and modernity
               </h3>
 
               <p className="text-gray-200 text-xs sm:text-[13px] leading-relaxed mb-6 font-normal max-w-lg line-clamp-2">

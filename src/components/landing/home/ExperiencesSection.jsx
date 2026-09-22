@@ -23,7 +23,7 @@ const ExperiencesSection = () => {
         </svg>
       ),
       title: "Culture & Heritage",
-      description: "Explore the fascinating history of Andalusia: palaces, historic cities, UNESCO-listed monuments and centuries-old traditions."
+      description: "Explore the fascinating history and heritage of The Haven: palaces, historic cities, UNESCO-listed monuments and centuries-old traditions."
     },
     {
       img: for3, // Moved from 3rd card
@@ -95,7 +95,7 @@ const ExperiencesSection = () => {
           >
             <img src={starIcon} alt="star" className="w-4 h-4 object-contain" />
             <span className="text-[#CC5B3B] text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.25em]">
-              ANDALUSIA YOUR WAY
+              THE HAVEN YOUR WAY
             </span>
           </motion.div>
 

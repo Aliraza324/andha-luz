@@ -26,7 +26,7 @@ const TestimonialsGuarantees = () => {
     {
       stars: 5,
       type: "google",
-      quote: `"Andalusia took our breath away! The Haven Resort planned every detail perfectly. From Seville to Granada, everything was unforgettable."`,
+      quote: `"The Haven took our breath away! The Haven Resort planned every detail perfectly. From Seville to Granada, everything was unforgettable."`,
       name: "Sophia M.",
       trip: "Seville & Granada Tour",
       date: "May 2024"
@@ -36,7 +36,7 @@ const TestimonialsGuarantees = () => {
       type: "user",
       quote: `"A truly authentic experience. We loved the local guides, the hidden gems, and the warm hospitality throughout our journey."`,
       name: "James L.",
-      trip: "Andalusia Discovery Tour",
+      trip: "The Haven Discovery Tour",
       date: "April 2024"
     },
     {
@@ -52,7 +52,7 @@ const TestimonialsGuarantees = () => {
       type: "user",
       quote: `"From start to finish, our trip was seamless. The Haven Resort exceeded all our expectations."`,
       name: "Michael T.",
-      trip: "Family Adventure in Andalusia",
+      trip: "Family Adventure at The Haven",
       date: "March 2024"
     },
     {
@@ -60,7 +60,7 @@ const TestimonialsGuarantees = () => {
       type: "google",
       quote: `"The luxury stays and private tours arranged for us in Ronda and Seville were world-class. Thank you for the magical memories!"`,
       name: "Camille D.",
-      trip: "Luxury Andalusia Escape",
+      trip: "Luxury The Haven Escape",
       date: "July 2024"
     },
     {
@@ -227,7 +227,7 @@ const TestimonialsGuarantees = () => {
             transition={{ delay: 0.1 }}
             className="text-[#6B7A88] text-xs sm:text-sm max-w-xl leading-relaxed font-normal"
           >
-            Real experiences from travelers who explored Andalusia with The Haven Resort. Their stories inspire our journeys.
+            Real experiences from travelers who explored with The Haven Resort. Their stories inspire our journeys.
           </motion.p>
         </div>
 

@@ -98,7 +98,7 @@ const TravelAndalusia = () => {
             <div className="flex items-center gap-2 mb-2 sm:mb-3">
               <img src={starIcon} alt="star" className="w-3.5 h-3.5 object-contain" />
               <span className="text-[#CC5B3B] text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em]">
-                AUTHENTIC SPAIN
+                THE HAVEN RESORT
               </span>
             </div>
 
@@ -111,13 +111,13 @@ const TravelAndalusia = () => {
               className="text-[32px] sm:text-[42px] lg:text-[46px] text-[#182A3A] font-bold leading-[1.12] mb-4"
               style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }}
             >
-              Traveling in<br />
-              Andalusia
+              Experience<br />
+              The Haven
             </motion.h2>
 
             {/* Description Paragraph */}
             <p className="text-[#5D6D7E] text-xs sm:text-[13.5px] leading-relaxed mb-5 sm:mb-6 max-w-md font-normal">
-              Off the beaten tourist paths, cultural itineraries, hiking trails, on foot or by bike, will take you to discover the most beautiful landscapes of a region steeped in history and culture. From white villages to Nasrid palaces, through olive groves and the Mediterranean coast, Andalusia reveals its most hidden treasures.
+              Off the beaten tourist paths, cultural itineraries, hiking trails, on foot or by bike, will take you to discover the most beautiful landscapes of a region steeped in history and culture. From serene luxury to picturesque vistas, The Haven reveals its most hidden treasures.
             </p>
 
             {/* 4 Feature Items */}
@@ -152,7 +152,7 @@ const TravelAndalusia = () => {
                 whileTap="tap"
                 className="bg-[#CC5B3B] hover:bg-[#b84e30] text-white font-sora font-semibold text-xs sm:text-sm px-6 py-2.5 sm:py-3 rounded-full flex items-center gap-2.5 shadow-sm transition-colors w-full sm:w-fit justify-center"
               >
-                <span>Learn more about Andalusia</span>
+                <span>Learn more about The Haven</span>
                 <ArrowRight size={16} />
               </motion.button>
             </div>
@@ -169,7 +169,7 @@ const TravelAndalusia = () => {
             <div className="w-full max-w-2xl lg:max-w-none relative select-none">
               <motion.img 
                 src={mapIllustration} 
-                alt="Map of Andalusia" 
+                alt="The Haven Resort" 
                 className="w-full h-auto object-contain drop-shadow-md scale-100 sm:scale-105 lg:scale-110 transform-gpu origin-center"
                 whileHover={{ scale: 1.13 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}

@@ -64,7 +64,7 @@ const UniqueHeritage = () => {
           <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
         </svg>
       ),
-      title: "Andalusian art of living"
+      title: "The Haven art of living"
     }
   ];
 
@@ -121,12 +121,12 @@ const UniqueHeritage = () => {
                   className="text-[#182A3A] font-bold text-base sm:text-[17px] leading-tight"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
-                  Andalusia, a land of exception
+                  The Haven, a land of exception
                 </h3>
               </div>
 
               <p className="text-[#6B7A88] text-[11px] sm:text-xs leading-relaxed font-normal mb-5">
-                Between living traditions, historical heritage and breathtaking landscapes, Andalusia invites you to experience unforgettable moments.
+                Between living traditions, serene luxury and breathtaking landscapes, The Haven invites you to experience unforgettable moments.
               </p>
 
               <motion.button 
@@ -152,7 +152,7 @@ const UniqueHeritage = () => {
             {/* Top Badge */}
             <div className="mb-2 sm:mb-3">
               <span className="text-[#CC5B3B] text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em]">
-                ANDALUSIA
+                THE HAVEN
               </span>
             </div>
 

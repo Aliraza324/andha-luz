@@ -15,8 +15,8 @@ const ContactSupportBar = () => {
     {
       icon: <Mail size={18} className="text-[#CC5B3B]" />,
       title: "Write to us",
-      value: "info@andhaluz-voyages.com",
-      link: "mailto:info@andhaluz-voyages.com",
+      value: "info@thehavenresort.com",
+      link: "mailto:info@thehavenresort.com",
       subtext: "Response within 24h"
     },
     {
@@ -33,7 +33,7 @@ const ContactSupportBar = () => {
     {
       icon: <MapPin size={18} className="text-[#CC5B3B]" />,
       title: "Our offices",
-      value: "Granada, Andalusia",
+      value: "The Haven Resort",
       link: "#",
       subtext: "Spain"
     }
